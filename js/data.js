@@ -1,4 +1,5 @@
-// Константы
+import {getRandomIntInclusive} from './utils.js'
+
 const DESCRIPTIONS = [
   'Моя ласточка',
   'Красивый закат',
@@ -37,10 +38,7 @@ const idListPhotos = [];
 const idListComments = [];
 const urlList = [];
 
-// Выбор елемента
 const getRandomArrayElement = (elements) => return elements[getRandomIntInclusive(0, elements.length - 1)];
-
-// Массив ключей
 
 const generateId = (idCount) => {
   let randomID = getRandomIntInclusive(1, idCount);
@@ -112,10 +110,8 @@ function createPhoto() {
   };
 }
 
-function getSimilarPhoto(photosCount) {
+function getSimilarPhotos(photosCount) {
   return Array.from({length: photosCount}, createPhoto);
 }
 
-const photosData = getSimilarPhoto(SIMILAR_PHOTO_DESCRIPTION_COUNT);
-
-export {photosData};
+export {getSimilarPhotos};

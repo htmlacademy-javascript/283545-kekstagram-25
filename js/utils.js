@@ -1,8 +1,5 @@
-// Импорты
+// Выбор числа
 
-import {getRandomIntInclusive} from './number-randomizer';
-
-// Выбор случайного числа
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -10,3 +7,8 @@ function getRandomIntInclusive(min, max) {
 }
 
 export {getRandomIntInclusive};
+
+// Проверка строки
+const inspectString = (string, maxWidth = 140) => string.length < maxWidth;
+
+export {inspectString};

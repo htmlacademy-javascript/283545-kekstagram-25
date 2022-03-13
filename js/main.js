@@ -1,4 +1,3 @@
-// Импорты
+import {getSimilarPhotos} from './data.js';
 
-import {inspectString} from './string-inspection';
-import {photosData} from './photo-data';
+const photosData = getSimilarPhotos(SIMILAR_PHOTO_DESCRIPTION_COUNT);
