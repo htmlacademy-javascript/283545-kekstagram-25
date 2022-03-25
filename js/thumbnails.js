@@ -1,4 +1,4 @@
-import {getFullsizeModal} from './fullsize-modal.js';
+import {getFullsizeModal} from './fullresolution.js';
 
 const pictureTemplate = document.querySelector('#picture').content;
 const newPictureTemplate = pictureTemplate.querySelector('.picture');
