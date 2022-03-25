@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from './utils.js'
+import {getRandomIntInclusive} from './utils.js';
 
 const DESCRIPTIONS = [
   'Моя ласточка',
@@ -33,12 +33,11 @@ const MESSAGES = [
 const DESCRIPTION_ID_COUNT = 25;
 const PHOTO_COUNT = 25;
 const COMMENT_ID_COUNT = 100000000;
-const SIMILAR_PHOTO_DESCRIPTION_COUNT = 25;
 const idListPhotos = [];
 const idListComments = [];
 const urlList = [];
 
-const getRandomArrayElement = (elements) => return elements[getRandomIntInclusive(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
 const generateId = (idCount) => {
   let randomID = getRandomIntInclusive(1, idCount);

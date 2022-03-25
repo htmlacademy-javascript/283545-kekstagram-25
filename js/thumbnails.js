@@ -1,20 +1,25 @@
-import { create } from 'browser-sync';
-import {getSimilarPhotos} from './data.js';
+import {getFullsizeModal} from './fullsize-modal.js';
 
 const pictureTemplate = document.querySelector('#picture').content;
 const newPictureTemplate = pictureTemplate.querySelector('.picture');
 const fragment = document.createDocumentFragment();
 const picturesList = document.querySelector('.pictures');
 
-const similarPictures = getSimilarPhoto(SIMILAR_PHOTO_COUNT);
+const showSmallPictures = (similarPictures) => {
+  similarPictures.forEach(({url, likes, comments}) => {
+    const similarPicture =  newPictureTemplate.cloneNode(true);
+    similarPicture.querySelector('.picture__img').src = url;
+    similarPicture.querySelector('.picture__likes').textContent = likes;
+    similarPicture.querySelector('.picture__comments').textContent = comments.length;
 
-similarPictures.forEach(({url, likes, comments}) => {
-  const similarPicture =  newPictureTemplate.cloneNode(true);
-  similarPicture.querySelector('.picture__img').src = url;
-  similarPicture.querySelector('.picture__likes').textContent = likes;
-  similarPicture.querySelector('.picture__comments').textContent = comments.length;
+    similarPicture.addEventListener('click', () => {
+      getFullsizeModal(url, likes, comments);
+    });
 
-  fragment.appendChild(similarPicture);
-});
+    fragment.appendChild(similarPicture);
+  });
 
-picturesList.appendChild(fragment);
+  picturesList.appendChild(fragment);
+};
+
+export {showSmallPictures};
