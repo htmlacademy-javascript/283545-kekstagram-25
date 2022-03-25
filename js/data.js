@@ -37,80 +37,93 @@ const idListPhotos = [];
 const idListComments = [];
 const urlList = [];
 
-const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
+const getRandomIdPhotos = (idCount) => {
+  let randomIdPhotos = getRandomInRange(1, idCount);
 
-const generateId = (idCount) => {
-  let randomID = getRandomIntInclusive(1, idCount);
-
-  while (idListPhotos.includes(randomID)) {
-    randomID = getRandomIntInclusive(1, idCount);
+  while (idListPhotos.includes(randomIdPhotos)) {
+    randomIdPhotos = getRandomInRange(1, idCount);
   }
 
-  idListPhotos.push(randomID);
+  idListPhotos.push(randomIdPhotos);
 
-  return randomID;
+  return randomIdPhotos;
 };
 
-const generateURL = (urlCount) => {
-  let randomURL = getRandomIntInclusive(1, urlCount);
+const getRandomIdComments = (idCount) => {
+  let randomIdComments = getRandomInRange(1, idCount);
 
-  while (urlList.includes(randomURL)) {
-    randomURL = getRandomIntInclusive(1, urlCount);
+  while (idListComments.includes(randomIdComments)) {
+    randomIdComments = getRandomInRange(1, idCount);
   }
 
-  urlList.push(randomURL);
+  idListComments.push(randomIdComments);
 
-  return randomURL;
+  return randomIdComments;
 };
 
-const avatar = () => {
-  const randomAvatar = getRandomIntInclusive(1, 6);
-  return `img/avatar-${randomAvatar}.png`;
-};
+const getRandomUrl = (urlCount) => {
+  let randomUrl = getRandomInRange(1, urlCount);
 
-const generateRandomMessage = () => {
-
-  let randomMessage = getRandomArrayElement(MESSAGES);
-
-  while (idListComments.includes(randomMessage)) {
-    randomMessage = getRandomArrayElement(MESSAGES);
+  while (urlList.includes(randomUrl)) {
+    randomUrl = getRandomInRange(1, urlCount);
   }
 
-  idListComments.push(randomMessage);
-  return ' ' + randomMessage;
+  urlList.push(randomUrl);
+
+  return `photos/${randomUrl}.jpg`;
+};
+
+const getRandomAvatar = () => {
+  const RANDOM_AVATAR_NUMBER = getRandomInRange(1, 6);
+  return `img/avatar-${RANDOM_AVATAR_NUMBER}.svg`;
 };
 
 const createRandomDoubleMessage = () => {
-  const randomDoubleMessage = String(Array.from({length: getRandomIntInclusive(1, 2)}, generateRandomMessage));
-  return randomDoubleMessage.trim();
+  const messageList = [];
+  const createRandomMessage = () => {
+
+    for (let i = 0; i <= MESSAGES.length -1; i++) {
+
+      let randomMessage = getRandomArrayElement(MESSAGES);
+
+      while (messageList.includes(randomMessage)) {
+        randomMessage = getRandomArrayElement(MESSAGES);
+      }
+
+      messageList.push(randomMessage);
+      return ` ${  randomMessage}`;
+    }
+  };
+  const RANDOM_DOUBLE_MESSAGE = String(Array.from({length: getRandomInRange(1, 2)}, createRandomMessage));
+  return RANDOM_DOUBLE_MESSAGE.trim();
 };
 
 function createComments() {
   return ({
-    id: generateId(COMMENT_ID_COUNT),
-    avatar: avatar(),
+    id: getRandomIdComments(COMMENT_ID_COUNT),
+    avatar: getRandomAvatar(),
     message: createRandomDoubleMessage(),
     name: getRandomArrayElement(NAMES),
   });
 }
 
 function getSimilarComments() {
-  const similarCommentsCount = getRandomIntInclusive(1, 3);
-  return Array.from({length: similarCommentsCount}, createComments);
+  const SIMILAR_COMMENTS_COUNT = getRandomInRange(1, 3);
+  return Array.from({length: SIMILAR_COMMENTS_COUNT}, createComments);
 }
 
 function createPhoto() {
   return {
-    id: generateId(DESCRIPTION_ID_COUNT),
-    url: generateURL(PHOTO_COUNT),
+    id: getRandomIdPhotos(DESCRIPTION_ID_COUNT),
+    url: getRandomUrl(PHOTO_COUNT),
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomIntInclusive(15, 200),
+    likes: getRandomInRange(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
     comments: getSimilarComments(),
   };
 }
 
-function getSimilarPhotos(photosCount) {
+function getSimilarPhoto(photosCount) {
   return Array.from({length: photosCount}, createPhoto);
 }
 
-export {getSimilarPhotos};
+export {getSimilarPhoto, SIMILAR_PHOTO_COUNT};
