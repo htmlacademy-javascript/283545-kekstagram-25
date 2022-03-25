@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from './utils.js';
+import {getRandomIntInclusive, getRandomArrayElement} from './utils.js';
 
 const DESCRIPTIONS = [
   'Моя ласточка',
@@ -33,15 +33,18 @@ const MESSAGES = [
 const DESCRIPTION_ID_COUNT = 25;
 const PHOTO_COUNT = 25;
 const COMMENT_ID_COUNT = 100000000;
+const MIN_LIKES_COUNT = 15;
+const MAX_LIKES_COUNT = 200;
+const SIMILAR_PHOTO_COUNT = 25;
 const idListPhotos = [];
 const idListComments = [];
 const urlList = [];
 
 const getRandomIdPhotos = (idCount) => {
-  let randomIdPhotos = getRandomInRange(1, idCount);
+  let randomIdPhotos = getRandomIntInclusive(1, idCount);
 
   while (idListPhotos.includes(randomIdPhotos)) {
-    randomIdPhotos = getRandomInRange(1, idCount);
+    randomIdPhotos = getRandomIntInclusive(1, idCount);
   }
 
   idListPhotos.push(randomIdPhotos);
@@ -50,10 +53,10 @@ const getRandomIdPhotos = (idCount) => {
 };
 
 const getRandomIdComments = (idCount) => {
-  let randomIdComments = getRandomInRange(1, idCount);
+  let randomIdComments = getRandomIntInclusive(1, idCount);
 
   while (idListComments.includes(randomIdComments)) {
-    randomIdComments = getRandomInRange(1, idCount);
+    randomIdComments = getRandomIntInclusive(1, idCount);
   }
 
   idListComments.push(randomIdComments);
@@ -62,10 +65,10 @@ const getRandomIdComments = (idCount) => {
 };
 
 const getRandomUrl = (urlCount) => {
-  let randomUrl = getRandomInRange(1, urlCount);
+  let randomUrl = getRandomIntInclusive(1, urlCount);
 
   while (urlList.includes(randomUrl)) {
-    randomUrl = getRandomInRange(1, urlCount);
+    randomUrl = getRandomIntInclusive(1, urlCount);
   }
 
   urlList.push(randomUrl);
@@ -74,7 +77,7 @@ const getRandomUrl = (urlCount) => {
 };
 
 const getRandomAvatar = () => {
-  const RANDOM_AVATAR_NUMBER = getRandomInRange(1, 6);
+  const RANDOM_AVATAR_NUMBER = getRandomIntInclusive(1, 6);
   return `img/avatar-${RANDOM_AVATAR_NUMBER}.svg`;
 };
 
@@ -94,7 +97,7 @@ const createRandomDoubleMessage = () => {
       return ` ${  randomMessage}`;
     }
   };
-  const RANDOM_DOUBLE_MESSAGE = String(Array.from({length: getRandomInRange(1, 2)}, createRandomMessage));
+  const RANDOM_DOUBLE_MESSAGE = String(Array.from({length: getRandomIntInclusive(1, 2)}, createRandomMessage));
   return RANDOM_DOUBLE_MESSAGE.trim();
 };
 
@@ -108,7 +111,7 @@ function createComments() {
 }
 
 function getSimilarComments() {
-  const SIMILAR_COMMENTS_COUNT = getRandomInRange(1, 3);
+  const SIMILAR_COMMENTS_COUNT = getRandomIntInclusive(1, 3);
   return Array.from({length: SIMILAR_COMMENTS_COUNT}, createComments);
 }
 
@@ -117,7 +120,7 @@ function createPhoto() {
     id: getRandomIdPhotos(DESCRIPTION_ID_COUNT),
     url: getRandomUrl(PHOTO_COUNT),
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInRange(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
+    likes: getRandomIntInclusive(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
     comments: getSimilarComments(),
   };
 }
