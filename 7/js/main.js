@@ -1,6 +1,5 @@
-import {getSimilarPhotos} from './data.js';
+import {getSimilarPhoto, SIMILAR_PHOTO_COUNT} from './data.js';
 import {showSmallPictures} from './thumbnails.js';
 
-const SIMILAR_PHOTO_DESCRIPTION_COUNT = 25;
-const photosData = getSimilarPhotos(SIMILAR_PHOTO_DESCRIPTION_COUNT);
-//showSmallPictures(photosData);
+const photosData = getSimilarPhoto(SIMILAR_PHOTO_COUNT);
+showSmallPictures(photosData);

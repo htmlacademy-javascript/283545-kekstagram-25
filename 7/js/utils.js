@@ -1,14 +1,22 @@
 // Выбор числа
 
 function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  if (min < 0 || max < 0 ) { throw 'ошибочное значение переменной';}
+  if (min > max) {
+    max = max + min;
+    min = max - min;
+    max = max - min;
+  }
+  const roundedMin = Math.ceil(min);
+  const roundedMax = Math.floor(max);
+  return Math.floor(Math.random() * (roundedMax - roundedMin + 1)) + roundedMin;
 }
 
-export {getRandomIntInclusive};
+const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
 // Проверка строки
-const inspectString = (string, maxWidth = 140) => string.length < maxWidth;
+//const inspectString = (string, maxWidth = 140) => string.length < maxWidth;
 
-export {inspectString};
+//inspectString();
+
+export {getRandomIntInclusive, getRandomArrayElement};
