@@ -1,4 +1,4 @@
-import {getRandomIntInclusive} from './utils.js'
+import {getRandomIntInclusive, getRandomArrayElement} from './utils.js';
 
 const DESCRIPTIONS = [
   'Моя ласточка',
@@ -33,85 +33,100 @@ const MESSAGES = [
 const DESCRIPTION_ID_COUNT = 25;
 const PHOTO_COUNT = 25;
 const COMMENT_ID_COUNT = 100000000;
-const SIMILAR_PHOTO_DESCRIPTION_COUNT = 25;
+const MIN_LIKES_COUNT = 15;
+const MAX_LIKES_COUNT = 200;
+const SIMILAR_PHOTO_COUNT = 25;
 const idListPhotos = [];
 const idListComments = [];
 const urlList = [];
 
-const getRandomArrayElement = (elements) => return elements[getRandomIntInclusive(0, elements.length - 1)];
+const getRandomIdPhotos = (idCount) => {
+  let randomIdPhotos = getRandomIntInclusive(1, idCount);
 
-const generateId = (idCount) => {
-  let randomID = getRandomIntInclusive(1, idCount);
-
-  while (idListPhotos.includes(randomID)) {
-    randomID = getRandomIntInclusive(1, idCount);
+  while (idListPhotos.includes(randomIdPhotos)) {
+    randomIdPhotos = getRandomIntInclusive(1, idCount);
   }
 
-  idListPhotos.push(randomID);
+  idListPhotos.push(randomIdPhotos);
 
-  return randomID;
+  return randomIdPhotos;
 };
 
-const generateURL = (urlCount) => {
-  let randomURL = getRandomIntInclusive(1, urlCount);
+const getRandomIdComments = (idCount) => {
+  let randomIdComments = getRandomIntInclusive(1, idCount);
 
-  while (urlList.includes(randomURL)) {
-    randomURL = getRandomIntInclusive(1, urlCount);
+  while (idListComments.includes(randomIdComments)) {
+    randomIdComments = getRandomIntInclusive(1, idCount);
   }
 
-  urlList.push(randomURL);
+  idListComments.push(randomIdComments);
 
-  return randomURL;
+  return randomIdComments;
 };
 
-const avatar = () => {
-  const randomAvatar = getRandomIntInclusive(1, 6);
-  return `img/avatar-${randomAvatar}.png`;
-};
+const getRandomUrl = (urlCount) => {
+  let randomUrl = getRandomIntInclusive(1, urlCount);
 
-const generateRandomMessage = () => {
-
-  let randomMessage = getRandomArrayElement(MESSAGES);
-
-  while (idListComments.includes(randomMessage)) {
-    randomMessage = getRandomArrayElement(MESSAGES);
+  while (urlList.includes(randomUrl)) {
+    randomUrl = getRandomIntInclusive(1, urlCount);
   }
 
-  idListComments.push(randomMessage);
-  return ' ' + randomMessage;
+  urlList.push(randomUrl);
+
+  return `photos/${randomUrl}.jpg`;
+};
+
+const getRandomAvatar = () => {
+  const RANDOM_AVATAR_NUMBER = getRandomIntInclusive(1, 6);
+  return `img/avatar-${RANDOM_AVATAR_NUMBER}.svg`;
 };
 
 const createRandomDoubleMessage = () => {
-  const randomDoubleMessage = String(Array.from({length: getRandomIntInclusive(1, 2)}, generateRandomMessage));
-  return randomDoubleMessage.trim();
+  const messageList = [];
+  const createRandomMessage = () => {
+
+    for (let i = 0; i <= MESSAGES.length -1; i++) {
+
+      let randomMessage = getRandomArrayElement(MESSAGES);
+
+      while (messageList.includes(randomMessage)) {
+        randomMessage = getRandomArrayElement(MESSAGES);
+      }
+
+      messageList.push(randomMessage);
+      return ` ${  randomMessage}`;
+    }
+  };
+  const RANDOM_DOUBLE_MESSAGE = String(Array.from({length: getRandomIntInclusive(1, 2)}, createRandomMessage));
+  return RANDOM_DOUBLE_MESSAGE.trim();
 };
 
 function createComments() {
   return ({
-    id: generateId(COMMENT_ID_COUNT),
-    avatar: avatar(),
+    id: getRandomIdComments(COMMENT_ID_COUNT),
+    avatar: getRandomAvatar(),
     message: createRandomDoubleMessage(),
     name: getRandomArrayElement(NAMES),
   });
 }
 
 function getSimilarComments() {
-  const similarCommentsCount = getRandomIntInclusive(1, 3);
-  return Array.from({length: similarCommentsCount}, createComments);
+  const SIMILAR_COMMENTS_COUNT = getRandomIntInclusive(1, 3);
+  return Array.from({length: SIMILAR_COMMENTS_COUNT}, createComments);
 }
 
 function createPhoto() {
   return {
-    id: generateId(DESCRIPTION_ID_COUNT),
-    url: generateURL(PHOTO_COUNT),
+    id: getRandomIdPhotos(DESCRIPTION_ID_COUNT),
+    url: getRandomUrl(PHOTO_COUNT),
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomIntInclusive(15, 200),
+    likes: getRandomIntInclusive(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
     comments: getSimilarComments(),
   };
 }
 
-function getSimilarPhotos(photosCount) {
+function getSimilarPhoto(photosCount) {
   return Array.from({length: photosCount}, createPhoto);
 }
 
-export {getSimilarPhotos};
+export {getSimilarPhoto, SIMILAR_PHOTO_COUNT};
