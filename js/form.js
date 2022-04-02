@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey} from './utils.js';
 import {body} from './fullresolution.js';
 import {imagePicturePreview} from './effects.js';
 
