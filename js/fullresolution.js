@@ -1,3 +1,5 @@
+import {isEscapeKey} from './util.js';
+
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -17,7 +19,7 @@ const getFullsizeModal = (url, likes, comments, description) => {
 
   const fragment = document.createDocumentFragment();
 
-  comments.forEach(({avatar, message, name}) => {
+  comments.forEach(({ avatar, message, name }) => {
     const socialCommentsItem = document.createElement('li');
 
     socialCommentsItem.classList.add('social__comment');
@@ -38,26 +40,31 @@ const getFullsizeModal = (url, likes, comments, description) => {
 
     fragment.appendChild(socialCommentsItem);
   });
+};
 
-  socialComments.appendChild(fragment);
+const onPopupEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    bigPicture.classList.add('hidden');
+    body.classList.remove('modal-open');
+  }
+};
 
+
+function openUserModal() {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   socialCommentCount.classList.add('hidden');
   socialCommentsLoader.classList.add('hidden');
 
-  closeButton.addEventListener('click', () => {
-    bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
-  });
+  document.addEventListener('keydown', onPopupEscKeydown);
+}
 
-  document.addEventListener('keydown', (evt) => {
-    const closeKeyNumber = 27;
-    if (evt.keyCode === closeKeyNumber) {
-      bigPicture.classList.add('hidden');
-      body.classList.remove('modal-open');
-    }
-  });
-};
+function closeUserModal() {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
 
-export {getFullsizeModal};
+  document.removeEventListener('keydown', onPopupEscKeydown);
+}
+
+export { getFullsizeModal, openUserModal, closeUserModal, closeButton, body };
