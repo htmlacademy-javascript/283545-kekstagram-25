@@ -41,10 +41,9 @@ const getFullsizeModal = (url, likes, comments, description) => {
     commentsFragment.appendChild(socialCommentsItem);
   });
   //Добавить фрагмент комментариев в нужное место попапа
-  //Показать попап
+  //Удалить старые комментарии
+  //Показывать только 5 комментариев
   openUserModal();
-  //Создать закрытие попапа
-
 };
 
 const onPopupEscKeydown = (evt) => {
@@ -87,4 +86,4 @@ function closeUserModal() {
   closeButton.removeEventListener('click', onClosedButtonClick);
 }
 
-export { getFullsizeModal, openUserModal, closeUserModal, closeButton, body};
+export { getFullsizeModal};
