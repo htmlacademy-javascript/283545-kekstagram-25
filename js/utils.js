@@ -14,9 +14,11 @@ function getRandomIntInclusive(min, max) {
 
 const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 // Проверка строки
 //const inspectString = (string, maxWidth = 140) => string.length < maxWidth;
 
 //inspectString();
 
-export {getRandomIntInclusive, getRandomArrayElement};
+export {getRandomIntInclusive, getRandomArrayElement, isEscapeKey};

@@ -1,3 +1,5 @@
+import {isEscapeKey} from './utils.js';
+
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -15,9 +17,9 @@ const getFullsizeModal = (url, likes, comments, description) => {
   commentsCount.textContent = comments;
   socialCaption.textContent = description;
 
-  const fragment = document.createDocumentFragment();
+  const commentsFragment = document.createDocumentFragment();
 
-  comments.forEach(({avatar, message, name}) => {
+  comments.forEach(({ avatar, message, name }) => {
     const socialCommentsItem = document.createElement('li');
 
     socialCommentsItem.classList.add('social__comment');
@@ -36,28 +38,52 @@ const getFullsizeModal = (url, likes, comments, description) => {
 
     socialCommentsItem.appendChild(socialText);
 
-    fragment.appendChild(socialCommentsItem);
+    commentsFragment.appendChild(socialCommentsItem);
   });
+  //Добавить фрагмент комментариев в нужное место попапа
+  //Удалить старые комментарии
+  //Показывать только 5 комментариев
+  openUserModal();
+};
 
-  socialComments.appendChild(fragment);
+const onPopupEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeUserModal();
+  }
+};
 
+/**
+ * Хендлер по нажатию на крестик
+ * @param {Object} evt - обьект события
+ */
+const onClosedButtonClick = (evt) => {
+  evt.preventDefault();
+  closeUserModal();
+};
+
+/**
+ * Открывает модальное окно
+ */
+function openUserModal() {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   socialCommentCount.classList.add('hidden');
   socialCommentsLoader.classList.add('hidden');
 
-  closeButton.addEventListener('click', () => {
-    bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
-  });
+  document.addEventListener('keydown', onPopupEscKeydown);
+  closeButton.addEventListener('click', onClosedButtonClick);
+}
 
-  document.addEventListener('keydown', (evt) => {
-    const closeKeyNumber = 27;
-    if (evt.keyCode === closeKeyNumber) {
-      bigPicture.classList.add('hidden');
-      body.classList.remove('modal-open');
-    }
-  });
-};
+/**
+ * Закрытие модального окна
+ */
+function closeUserModal() {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
 
-export {getFullsizeModal};
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  closeButton.removeEventListener('click', onClosedButtonClick);
+}
+
+export { getFullsizeModal};
