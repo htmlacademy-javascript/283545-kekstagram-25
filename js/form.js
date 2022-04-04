@@ -1,33 +1,34 @@
-import {isEscapeKey} from './utils.js';
-import {body} from './fullresolution.js';
-import {imagePicturePreview} from './effects.js';
+import { isEscapeKey } from './utils.js';
+import { body } from './fullresolution.js';
+import { activateEffects, deactivateEffects } from './effects.js';
+
+const imagePicturePreview = document.querySelector('.img-upload__preview img');
+const uploadFile = document.querySelector('#upload-file');
+const uploadForm = document.querySelector('.img-upload__overlay');
+const closeButtonUploadForm = document.querySelector('.img-upload__cancel');
+const form = document.querySelector('.img-upload__form');
+const hashtags = form.querySelector('.text__hashtags');
+const scaleControlSmaller = document.querySelector('.scale__control--smaller');
+const scaleControlBigger = document.querySelector('.scale__control--bigger');
+const scaleControlValue = document.querySelector('.scale__control--value');
+const MIN_SCALE_VALUE = 25;
+const MAX_SCALE_VALUE = 100;
+const SCALE_STEP_VALUE = 25;
+const DEFAULT_VALUE = 100;
 
 const activateValidationForm = () => {
 
-  const uploadFile = document.querySelector('#upload-file');
-  const uploadForm = document.querySelector('.img-upload__overlay');
-  const closeButtonUploadForm = document.querySelector('.img-upload__cancel');
-  const form = document.querySelector('.img-upload__form');
-  const hashtags = form.querySelector('.text__hashtags');
-  const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-  const scaleControlBigger = document.querySelector('.scale__control--bigger');
-  const scaleControlValue = document.querySelector('.scale__control--value');
-  const MIN_SCALE_VALUE = 25;
-  const MAX_SCALE_VALUE = 100;
-  const SCALE_STEP_VALUE = 25;
-  const DEFAULT_VALUE = 100;
-
-  function lowerScale () {
+  function lowerScale() {
     if (parseInt(scaleControlValue.value, 10) > MIN_SCALE_VALUE) {
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - SCALE_STEP_VALUE} %`;
-      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10)/100})`;
+      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
     }
   }
 
-  function increaseScale () {
+  function increaseScale() {
     if (parseInt(scaleControlValue.value, 10) < MAX_SCALE_VALUE) {
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + SCALE_STEP_VALUE} %`;
-      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10)/100})`;
+      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
     }
   }
 
@@ -38,7 +39,7 @@ const activateValidationForm = () => {
     }
   };
 
-  function onFormOpenUpload () {
+  function onFormOpenUpload() {
     uploadForm.classList.remove('hidden');
     body.classList.add('modal-open');
 
@@ -46,9 +47,11 @@ const activateValidationForm = () => {
     scaleControlValue.value = `${DEFAULT_VALUE} %`;
     scaleControlSmaller.addEventListener('click', lowerScale);
     scaleControlBigger.addEventListener('click', increaseScale);
+
+    activateEffects();
   }
 
-  function onFormCloseUpload () {
+  function onFormCloseUpload() {
     uploadForm.classList.add('hidden');
     body.classList.remove('modal-open');
 
@@ -56,19 +59,20 @@ const activateValidationForm = () => {
     scaleControlSmaller.removeEventListener('click', lowerScale);
     scaleControlBigger.removeEventListener('click', increaseScale);
     uploadFile.value = '';
+    deactivateEffects();
   }
 
-  uploadFile.addEventListener('change',onFormOpenUpload);
+  uploadFile.addEventListener('change', onFormOpenUpload);
 
   closeButtonUploadForm.addEventListener('click', () => {
-    onFormCloseUpload ();
+    onFormCloseUpload();
   });
 
-  const pristine = new Pristine(form,{
-    classTo: 'text__description-label',
-    errorTextParent: 'text__description-label',
+  const pristine = new Pristine(form, {
+    classTo: 'img-upload__text',
+    errorTextParent: 'img-upload__text',
     errorTextTag: 'div',
-    errorTextClass: 'text__description-label-error-text',
+    errorTextClass: 'text__error-text',
   });
 
   form.addEventListener('submit', (evt) => {
@@ -89,4 +93,4 @@ const activateValidationForm = () => {
   );
 };
 
-export {activateValidationForm};
+export { activateValidationForm };

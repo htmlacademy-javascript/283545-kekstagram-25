@@ -67,4 +67,4 @@ function closeUserModal() {
   document.removeEventListener('keydown', onPopupEscKeydown);
 }
 
-export { getFullsizeModal, openUserModal, closeUserModal, closeButton, body };
+export { getFullsizeModal, openUserModal, closeUserModal, closeButton, body};
