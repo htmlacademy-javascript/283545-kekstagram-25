@@ -6,14 +6,14 @@ const fragment = document.createDocumentFragment();
 const picturesList = document.querySelector('.pictures');
 
 const showSmallPictures = (similarPictures) => {
-  similarPictures.forEach(({url, likes, comments}) => {
+  similarPictures.forEach(({url, likes, comments, description}) => {
     const similarPicture =  newPictureTemplate.cloneNode(true);
     similarPicture.querySelector('.picture__img').src = url;
     similarPicture.querySelector('.picture__likes').textContent = likes;
     similarPicture.querySelector('.picture__comments').textContent = comments.length;
 
     similarPicture.addEventListener('click', () => {
-      getFullsizeModal(url, likes, comments);
+      getFullsizeModal(url, likes, comments, description);
     });
 
     fragment.appendChild(similarPicture);

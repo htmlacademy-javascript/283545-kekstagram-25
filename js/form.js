@@ -2,6 +2,11 @@ import { isEscapeKey } from './utils.js';
 import { body } from './fullresolution.js';
 import { activateEffects, deactivateEffects } from './effects.js';
 
+const MIN_SCALE_VALUE = 25;
+const MAX_SCALE_VALUE = 100;
+const SCALE_STEP_VALUE = 25;
+const DEFAULT_VALUE = 100;
+
 const imagePicturePreview = document.querySelector('.img-upload__preview img');
 const uploadFile = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__overlay');
@@ -11,10 +16,6 @@ const hashtags = form.querySelector('.text__hashtags');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
-const MIN_SCALE_VALUE = 25;
-const MAX_SCALE_VALUE = 100;
-const SCALE_STEP_VALUE = 25;
-const DEFAULT_VALUE = 100;
 
 const activateValidationForm = () => {
 
