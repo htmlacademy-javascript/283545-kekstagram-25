@@ -17,7 +17,7 @@ const getFullsizeModal = (url, likes, comments, description) => {
   commentsCount.textContent = comments;
   socialCaption.textContent = description;
 
-  const fragment = document.createDocumentFragment();
+  const commentsFragment = document.createDocumentFragment();
 
   comments.forEach(({ avatar, message, name }) => {
     const socialCommentsItem = document.createElement('li');
@@ -38,19 +38,33 @@ const getFullsizeModal = (url, likes, comments, description) => {
 
     socialCommentsItem.appendChild(socialText);
 
-    fragment.appendChild(socialCommentsItem);
+    commentsFragment.appendChild(socialCommentsItem);
   });
+  //Добавить фрагмент комментариев в нужное место попапа
+  //Удалить старые комментарии
+  //Показывать только 5 комментариев
+  openUserModal();
 };
 
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
+    closeUserModal();
   }
 };
 
+/**
+ * Хендлер по нажатию на крестик
+ * @param {Object} evt - обьект события
+ */
+const onClosedButtonClick = (evt) => {
+  evt.preventDefault();
+  closeUserModal();
+};
 
+/**
+ * Открывает модальное окно
+ */
 function openUserModal() {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -58,13 +72,18 @@ function openUserModal() {
   socialCommentsLoader.classList.add('hidden');
 
   document.addEventListener('keydown', onPopupEscKeydown);
+  closeButton.addEventListener('click', onClosedButtonClick);
 }
 
+/**
+ * Закрытие модального окна
+ */
 function closeUserModal() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onPopupEscKeydown);
+  closeButton.removeEventListener('click', onClosedButtonClick);
 }
 
-export { getFullsizeModal, openUserModal, closeUserModal, closeButton, body };
+export { getFullsizeModal};

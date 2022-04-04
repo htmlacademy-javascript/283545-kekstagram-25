@@ -4,20 +4,48 @@ const effectsItems = effectsList.querySelectorAll('.effects__item');
 const effectLevelValue= document.querySelector('.effect-level__value');
 const effectSlider = document.querySelector('.effect-level__slider');
 
-noUiSlider.create(effectSlider, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 1,
-  connect: 'lower',
-});
+const activateEffects = () => {
+  sliderInit();
 
-effectSlider.noUiSlider.on('update', () => {
-  effectLevelValue.value = effectSlider.noUiSlider.get();
-  applyEffect ();
-});
+  effectSlider.noUiSlider.on('update', () => {
+    effectLevelValue.value = effectSlider.noUiSlider.get();
+    applyEffect ();
+  });
+
+  onEffectSliderUpdate ();
+
+};
+
+function sliderInit () {
+  if (!effectSlider.noUiSlider) {
+
+    noUiSlider.create(effectSlider, {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 100,
+      step: 1,
+      connect: 'lower',
+    });
+    effectSlider.setAttribute('disabled', true);
+  }
+}
+
+function sliderDestroy () {
+  if (effectSlider.noUiSlider) {
+    effectSlider.noUiSlider.destroy();
+  }
+}
+
+function deactivateEffects () {
+  imagePicturePreview.style.transform = '';
+  imagePicturePreview.style.filter = 'none';
+  imagePicturePreview.className = 'effects__preview--none';
+
+  sliderDestroy();
+}
+
 
 function applyEffect () {
   if (imagePicturePreview.classList.contains('effects__preview--none')) {
@@ -46,7 +74,6 @@ function applyEffect () {
 }
 
 function onEffectSliderUpdate () {
-  effectSlider.setAttribute('disabled', true);
 
   for (const effectsItem of effectsItems) {
     const effectsRadio = effectsItem.querySelector('.effects__radio');
@@ -55,7 +82,7 @@ function onEffectSliderUpdate () {
       imagePicturePreview.className = '';
       imagePicturePreview.classList.add(`effects__preview--${effectsRadio.value}`);
 
-      if (imagePicturePreview.className === 'effects__preview--chrome' || imagePicturePreview === 'effects__preview--sepia') {
+      if (imagePicturePreview.className === 'effects__preview--chrome' || imagePicturePreview.className === 'effects__preview--sepia') {
         effectSlider.removeAttribute('disabled');
         effectSlider.noUiSlider.updateOptions({
           range: {
@@ -105,11 +132,10 @@ function onEffectSliderUpdate () {
 
       else if (imagePicturePreview.className === 'effects__preview--none') {
         effectSlider.setAttribute('disabled', true);
+        imagePicturePreview.style.filter = 'none';
       }
     });
   }
 }
 
-onEffectSliderUpdate ();
-
-export {imagePicturePreview};
+export {activateEffects, deactivateEffects};
