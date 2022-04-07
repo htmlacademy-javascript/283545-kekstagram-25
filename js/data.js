@@ -111,7 +111,7 @@ function createComments() {
 }
 
 function getSimilarComments() {
-  const SIMILAR_COMMENTS_COUNT = getRandomIntInclusive(1, 3);
+  const SIMILAR_COMMENTS_COUNT = getRandomIntInclusive(1, 15);
   return Array.from({length: SIMILAR_COMMENTS_COUNT}, createComments);
 }
 

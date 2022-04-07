@@ -19,17 +19,17 @@ const scaleControlValue = document.querySelector('.scale__control--value');
 
 const activateValidationForm = () => {
 
-  function lowerScale() {
+  function lowerScale () {
     if (parseInt(scaleControlValue.value, 10) > MIN_SCALE_VALUE) {
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - SCALE_STEP_VALUE} %`;
-      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
+      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10)/100})`;
     }
   }
 
-  function increaseScale() {
+  function increaseScale () {
     if (parseInt(scaleControlValue.value, 10) < MAX_SCALE_VALUE) {
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + SCALE_STEP_VALUE} %`;
-      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
+      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10)/100})`;
     }
   }
 
@@ -40,7 +40,7 @@ const activateValidationForm = () => {
     }
   };
 
-  function onFormOpenUpload() {
+  function onFormOpenUpload () {
     uploadForm.classList.remove('hidden');
     body.classList.add('modal-open');
 
@@ -52,7 +52,7 @@ const activateValidationForm = () => {
     activateEffects();
   }
 
-  function onFormCloseUpload() {
+  function onFormCloseUpload () {
     uploadForm.classList.add('hidden');
     body.classList.remove('modal-open');
 
@@ -66,10 +66,10 @@ const activateValidationForm = () => {
   uploadFile.addEventListener('change', onFormOpenUpload);
 
   closeButtonUploadForm.addEventListener('click', () => {
-    onFormCloseUpload();
+    onFormCloseUpload ();
   });
 
-  const pristine = new Pristine(form, {
+  const pristine = new Pristine(form,{
     classTo: 'img-upload__text',
     errorTextParent: 'img-upload__text',
     errorTextTag: 'div',
@@ -94,4 +94,4 @@ const activateValidationForm = () => {
   );
 };
 
-export { activateValidationForm };
+export {activateValidationForm};
