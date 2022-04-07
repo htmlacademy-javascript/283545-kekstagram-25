@@ -14,7 +14,7 @@ const socialCommentsLoader = bigPicture.querySelector('.comments-loader');
 const getFullsizeModal = (url, likes, comments, description) => {
   bigPictureImage.src = url;
   likesCount.textContent = likes;
-  commentsCount.textContent = comments;
+  commentsCount.textContent = comments.length;
   socialCaption.textContent = description;
 
   const commentsFragment = document.createDocumentFragment();
@@ -40,9 +40,9 @@ const getFullsizeModal = (url, likes, comments, description) => {
 
     commentsFragment.appendChild(socialCommentsItem);
   });
-  //Добавить фрагмент комментариев в нужное место попапа
-  //Удалить старые комментарии
   //Показывать только 5 комментариев
+  socialComments.innerHTML = '';
+  socialComments.appendChild(commentsFragment);
   openUserModal();
 };
 
@@ -68,8 +68,6 @@ const onClosedButtonClick = (evt) => {
 function openUserModal() {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  socialCommentCount.classList.add('hidden');
-  socialCommentsLoader.classList.add('hidden');
 
   document.addEventListener('keydown', onPopupEscKeydown);
   closeButton.addEventListener('click', onClosedButtonClick);
@@ -86,4 +84,15 @@ function closeUserModal() {
   closeButton.removeEventListener('click', onClosedButtonClick);
 }
 
-export { getFullsizeModal};
+/**
+ * Показ 5 комментариев
+ */
+//Выделить 5 первых комментариев из списка, если их больше 5, либо показываем все и убрать кнопку загрузки
+//Скрыть все коментарии кроме первых 5
+//Изменить значение счетчика показанных комментариев
+//Поставить слушатель события, при котором он выполнит первые 3 пункта, на кнопку загрузки
+/*function showCommentByFive() {
+
+}*/
+
+export { getFullsizeModal, body};
