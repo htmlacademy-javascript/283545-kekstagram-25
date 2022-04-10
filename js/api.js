@@ -1,4 +1,4 @@
-import {showAlert, isEscapeKey} from './util.js';
+import {showAlert, isEscapeKey} from './utils.js';
 
 const body = document.querySelector('body');
 const templateSuccess = document.querySelector('#success').content.querySelector('.success');
