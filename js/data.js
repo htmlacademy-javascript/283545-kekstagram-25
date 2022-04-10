@@ -1,4 +1,4 @@
-import {getRandomIntInclusive, getRandomArrayElement} from './utils.js';
+/*import {getRandomIntInclusive, getRandomArrayElement} from './utils.js';
 
 const DESCRIPTIONS = [
   'Моя ласточка',
@@ -130,3 +130,4 @@ function getSimilarPhoto(photosCount) {
 }
 
 export {getSimilarPhoto, SIMILAR_PHOTO_COUNT};
+*/
