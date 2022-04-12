@@ -4,6 +4,15 @@ const pictureTemplate = document.querySelector('#picture').content;
 const newPictureTemplate = pictureTemplate.querySelector('.picture');
 const fragment = document.createDocumentFragment();
 const picturesList = document.querySelector('.pictures');
+const pictures = document.querySelectorAll('.picture');
+
+const removeAllPictures = () => {
+  for (let i = 0; i < pictures.length; i++) {
+    pictures[i].remove();
+  }
+};
+
+removeAllPictures();
 
 const showSmallPictures = (similarPictures) => {
   similarPictures.forEach(({url, likes, comments, description}) => {
