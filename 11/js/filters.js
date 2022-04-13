@@ -1,5 +1,5 @@
-import {debounce} from './util.js';
-import {getRandomArrayElement} from './util.js';
+import {debounce} from './utils.js';
+import {getRandomArrayElement} from './utils.js';
 import {renderPhotos} from './thumbnails.js';
 
 const RERENDER_DELAY = 500;
