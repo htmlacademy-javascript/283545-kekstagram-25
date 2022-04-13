@@ -40,7 +40,6 @@ function showAlert (message) {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-};
 }
 
 function debounce (callback, timeoutDelay = 500) {
@@ -52,5 +51,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {getRandomArrayElement, getRandomInRange, isEscapeKey, showAlert};
-export {getRandomArrayElement, getRandomInRange, isEscapeKey, showAlert, debounce};
+export {getRandomArrayElement, getRandomIntInclusive, isEscapeKey, showAlert, debounce};
