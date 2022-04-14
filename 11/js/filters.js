@@ -1,6 +1,6 @@
 import {debounce} from './utils.js';
 import {getRandomArrayElement} from './utils.js';
-import {renderPhotos} from './thumbnails.js';
+import {showSmallPictures} from './thumbnails.js';
 
 const RERENDER_DELAY = 500;
 
@@ -36,7 +36,7 @@ const activateFilters = (similarPhotos) => {
 
     const randomPhotos = getRandomImages(similarPhotos);
 
-    renderPhotos(randomPhotos);
+    showSmallPictures(randomPhotos);
   }, RERENDER_DELAY));
 
   discussedFilter.addEventListener('click', debounce(() => {
@@ -46,7 +46,7 @@ const activateFilters = (similarPhotos) => {
 
     const discussedPhotos = getDiscussedImages(similarPhotos);
 
-    renderPhotos(discussedPhotos);
+    showSmallPictures(discussedPhotos);
   }, RERENDER_DELAY));
 
   defaultFilter.addEventListener('click', debounce(() => {
@@ -54,7 +54,7 @@ const activateFilters = (similarPhotos) => {
     randomFilter.classList.remove('img-filters__button--active');
     defaultFilter.classList.remove('img-filters__button--active');
 
-    renderPhotos(similarPhotos);
+    showSmallPictures(similarPhotos);
   }, RERENDER_DELAY));
 };
 
