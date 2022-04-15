@@ -3,6 +3,7 @@ const effectsList = document.querySelector('.effects__list');
 const effectsItems = effectsList.querySelectorAll('.effects__item');
 const effectLevelValue= document.querySelector('.effect-level__value');
 const effectSlider = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level');
 
 const activateEffects = () => {
   sliderInit();
@@ -78,11 +79,14 @@ function onEffectSliderUpdate () {
   for (const effectsItem of effectsItems) {
     const effectsRadio = effectsItem.querySelector('.effects__radio');
 
+    effectLevel.classList.add('hidden');
+
     effectsRadio.addEventListener('click', () => {
       imagePicturePreview.className = '';
       imagePicturePreview.classList.add(`effects__preview--${effectsRadio.value}`);
 
       if (imagePicturePreview.className === 'effects__preview--chrome' || imagePicturePreview.className === 'effects__preview--sepia') {
+        effectLevel.classList.remove('hidden');
         effectSlider.removeAttribute('disabled');
         effectSlider.noUiSlider.updateOptions({
           range: {
@@ -95,6 +99,7 @@ function onEffectSliderUpdate () {
       }
 
       else if (imagePicturePreview.className === 'effects__preview--marvin') {
+        effectLevel.classList.remove('hidden');
         effectSlider.removeAttribute('disabled');
         effectSlider.noUiSlider.updateOptions({
           range: {
@@ -107,6 +112,7 @@ function onEffectSliderUpdate () {
       }
 
       else if (imagePicturePreview.className === 'effects__preview--phobos') {
+        effectLevel.classList.remove('hidden');
         effectSlider.removeAttribute('disabled');
         effectSlider.noUiSlider.updateOptions({
           range: {
@@ -119,6 +125,7 @@ function onEffectSliderUpdate () {
       }
 
       else if (imagePicturePreview.className === 'effects__preview--heat') {
+        effectLevel.classList.remove('hidden');
         effectSlider.removeAttribute('disabled');
         effectSlider.noUiSlider.updateOptions({
           range: {
@@ -131,6 +138,7 @@ function onEffectSliderUpdate () {
       }
 
       else if (imagePicturePreview.className === 'effects__preview--none') {
+        effectLevel.classList.add('hidden');
         effectSlider.setAttribute('disabled', true);
         imagePicturePreview.style.filter = 'none';
       }

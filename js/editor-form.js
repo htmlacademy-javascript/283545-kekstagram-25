@@ -74,7 +74,7 @@ const activateValidationForm = () => {
     onFormCloseUpload();
   });
 
-  const pristine = new Pristine(form, {
+  const pristine = new Pristine (form, {
     classTo: 'img-upload__text',
     errorTextParent: 'img-upload__text',
     errorTextTag: 'div',
