@@ -19,9 +19,7 @@ const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, el
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 // Проверка строки
-//const inspectString = (string, maxWidth = 140) => string.length < maxWidth;
-
-//inspectString();
+const inspectString = (string, maxWidth = 140) => string.length < maxWidth;
 
 
 function showAlert (message) {
@@ -51,4 +49,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {getRandomArrayElement, getRandomIntInclusive, isEscapeKey, showAlert, debounce};
+export {getRandomArrayElement, getRandomIntInclusive, isEscapeKey, showAlert, debounce, inspectString};
