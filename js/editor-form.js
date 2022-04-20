@@ -27,6 +27,12 @@ const hashtagsRepeatValidationErrorMessage = 'Хэштеги не должны �
 const textDescriptionValidationErrorMessage = 'Не более 140 знаков';
 
 const activateValidationForm = () => {
+  const pristine = new Pristine(form, {
+    classTo: 'img-upload__text-container',
+    errorTextParent: 'img-upload__text-container',
+    errorTextTag: 'div',
+    errorTextClass: 'img-upload__error',
+  });
 
   uploadFile.addEventListener('change', () => {
     const file = uploadFile.files[0];
@@ -82,6 +88,10 @@ const activateValidationForm = () => {
     scaleControlSmaller.removeEventListener('click', lowerScale);
     scaleControlBigger.removeEventListener('click', increaseScale);
     uploadFile.value = '';
+    hashtags.value = '';
+    textDescription.value = '';
+
+    pristine.reset();
     deactivateEffects();
   }
 
@@ -89,13 +99,6 @@ const activateValidationForm = () => {
 
   closeButtonUploadForm.addEventListener('click', () => {
     onFormCloseUpload();
-  });
-
-  const pristine = new Pristine(form, {
-    classTo: 'img-upload__text',
-    errorTextParent: 'img-upload__text',
-    errorTextTag: 'div',
-    errorTextClass: 'text__error-text',
   });
 
   const blockSubmitButton = () => {
