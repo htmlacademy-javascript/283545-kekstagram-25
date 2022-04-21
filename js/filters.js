@@ -3,6 +3,7 @@ import {getRandomArrayElement} from './utils.js';
 import {showSmallPictures} from './thumbnails.js';
 
 const RERENDER_DELAY = 500;
+const RANDOM_IMAGE_COUNT = 10;
 
 const filters = document.querySelector('.img-filters');
 const randomFilter = filters.querySelector('#filter-random');
@@ -10,18 +11,18 @@ const discussedFilter = filters.querySelector('#filter-discussed');
 const defaultFilter = filters.querySelector('#filter-default');
 
 const getRandomImages = (similarPhotos) => {
-  const randomImagesList = [];
+  const randomImages = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < RANDOM_IMAGE_COUNT; i++) {
     let random = getRandomArrayElement(similarPhotos);
 
-    if (randomImagesList.includes(random)) {
+    if (randomImages.includes(random)) {
       random = getRandomArrayElement(similarPhotos);
     }
 
-    randomImagesList.push(random);
+    randomImages.push(random);
   }
-  return randomImagesList;
+  return randomImages;
 };
 
 const getDiscussedImages = (similarPhotos) => similarPhotos.slice().sort((a, b) => b.comments.length - a.comments.length);

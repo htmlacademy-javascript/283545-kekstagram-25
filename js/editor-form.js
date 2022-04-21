@@ -4,7 +4,6 @@ import { activateEffects, deactivateEffects } from './effects.js';
 import { sendData } from './api.js';
 
 const MIN_SCALE_VALUE = 25;
-const MAX_SCALE_VALUE = 100;
 const SCALE_STEP_VALUE = 25;
 const DEFAULT_VALUE = 100;
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
@@ -45,18 +44,13 @@ const activateValidationForm = () => {
     }
   });
 
-  function lowerScale() {
+  function onChangeScale() {
     if (parseInt(scaleControlValue.value, 10) > MIN_SCALE_VALUE) {
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) - SCALE_STEP_VALUE} %`;
-      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
-    }
-  }
-
-  function increaseScale() {
-    if (parseInt(scaleControlValue.value, 10) < MAX_SCALE_VALUE) {
+    } else if (parseInt(scaleControlValue.value, 10) < DEFAULT_VALUE) {
       scaleControlValue.value = `${parseInt(scaleControlValue.value, 10) + SCALE_STEP_VALUE} %`;
-      imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / 100})`;
     }
+    imagePicturePreview.style.transform = `scale(${parseInt(scaleControlValue.value, 10) / DEFAULT_VALUE})`;
   }
 
   const onFormEscKeydown = (evt) => {
@@ -74,8 +68,8 @@ const activateValidationForm = () => {
 
     document.addEventListener('keydown', onFormEscKeydown);
     scaleControlValue.value = `${DEFAULT_VALUE} %`;
-    scaleControlSmaller.addEventListener('click', lowerScale);
-    scaleControlBigger.addEventListener('click', increaseScale);
+    scaleControlSmaller.addEventListener('click', onChangeScale);
+    scaleControlBigger.addEventListener('click', onChangeScale);
 
     activateEffects();
   }
@@ -85,8 +79,8 @@ const activateValidationForm = () => {
     body.classList.remove('modal-open');
 
     document.removeEventListener('keydown', onFormEscKeydown);
-    scaleControlSmaller.removeEventListener('click', lowerScale);
-    scaleControlBigger.removeEventListener('click', increaseScale);
+    scaleControlSmaller.removeEventListener('click', onChangeScale);
+    scaleControlBigger.removeEventListener('click', onChangeScale);
     uploadFile.value = '';
     hashtags.value = '';
     textDescription.value = '';
@@ -152,13 +146,13 @@ const activateValidationForm = () => {
 
   function validateHashtagsRepeat(value) {
     const resultArray = value.toLowerCase().split(SPLITTER);
-    const uniqArray = [];
+    const uniqHashtags = [];
     for (let i = 0; i < resultArray.length; i++) {
-      if (uniqArray.includes(resultArray[i])) {
+      if (uniqHashtags.includes(resultArray[i])) {
         return false;
       }
 
-      uniqArray.push(resultArray[i]);
+      uniqHashtags.push(resultArray[i]);
     }
     return resultArray;
   }

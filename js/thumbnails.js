@@ -4,9 +4,9 @@ const pictureTemplate = document.querySelector('#picture').content;
 const newPictureTemplate = pictureTemplate.querySelector('.picture');
 const fragment = document.createDocumentFragment();
 const picturesList = document.querySelector('.pictures');
-const pictures = document.querySelectorAll('.picture');
 
 const removeAllPictures = () => {
+  const pictures = document.querySelectorAll('.picture');
   for (let i = 0; i < pictures.length; i++) {
     pictures[i].remove();
   }
@@ -27,6 +27,8 @@ const showSmallPictures = (similarPictures) => {
 
     fragment.appendChild(similarPicture);
   });
+
+  removeAllPictures();
 
   picturesList.appendChild(fragment);
 };
