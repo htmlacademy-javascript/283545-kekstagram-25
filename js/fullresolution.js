@@ -1,5 +1,7 @@
 import {isEscapeKey} from './utils.js';
 
+const SHOWN_COMMENT_COUNT = 5;
+
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -12,27 +14,19 @@ const socialCommentsLoader = bigPicture.querySelector('.comments-loader');
 
 const getFullsizeModal = (url, likes, comments, description) => {
   const commentsLength = comments.length;
-  let commentsCounter = 5;
+  let commentsCounter = SHOWN_COMMENT_COUNT;
 
   bigPictureImage.src = url;
   likesCount.textContent = likes;
   socialCaption.textContent = description;
 
   const showCommentsCount = () => {
-    if (commentsLength >= commentsCounter) {
-      socialCommentCount.innerHTML = `${commentsCounter} из <span class="comments-count">${commentsLength}</span> комментариев`;
-    } else {
-      socialCommentCount.innerHTML = `${commentsLength} из <span class="comments-count">${commentsLength}</span> комментариев`;
-    }
+    socialCommentCount.textContent = `${(commentsLength >= commentsCounter) ? commentsCounter : commentsLength} из ${commentsLength} комментариев`;
   };
 
   const updateCommentsCounterValue = () => {
     const commentsRemainder = commentsLength - commentsCounter;
-    if (commentsRemainder >= 5) {
-      commentsCounter = commentsCounter + 5;
-    } else {
-      commentsCounter =  commentsCounter + commentsRemainder;
-    }
+    commentsCounter = commentsCounter + (commentsRemainder >= SHOWN_COMMENT_COUNT) ? SHOWN_COMMENT_COUNT : commentsRemainder;
   };
 
   const showCommentsLoader = () => {
@@ -65,7 +59,7 @@ const getFullsizeModal = (url, likes, comments, description) => {
   setCommentsVisibility(commentsLength, commentsCounter, socialComments);
   openUserModal();
 
-  socialCommentsLoader.addEventListener('click', () => onSocialCommentsLoaderClick(updateCommentsCounterValue, showCommentsCount, showCommentsLoader, setCommentsVisibility));
+  socialCommentsLoader.addEventListener('click', () => loadComments(updateCommentsCounterValue, showCommentsCount, showCommentsLoader, setCommentsVisibility));
 };
 
 function createFragmentWithComments (comments) {
@@ -97,7 +91,7 @@ function createFragmentWithComments (comments) {
   return commentsFragment;
 }
 
-function onSocialCommentsLoaderClick (updateCommentsCounterValue, showCommentsCount, showCommentsLoader, setCommentsVisibility) {
+function loadComments (updateCommentsCounterValue, showCommentsCount, showCommentsLoader, setCommentsVisibility) {
   updateCommentsCounterValue();
   showCommentsCount ();
   showCommentsLoader ();
@@ -141,16 +135,5 @@ function closeUserModal() {
   document.removeEventListener('keydown', onPopupEscKeydown);
   closeButton.removeEventListener('click', onClosedButtonClick);
 }
-
-/**
- * Показ 5 комментариев
- */
-//Выделить 5 первых комментариев из списка, если их больше 5, либо показываем все и убрать кнопку загрузки
-//Скрыть все коментарии кроме первых 5
-//Изменить значение счетчика показанных комментариев
-//Поставить слушатель события, при котором он выполнит первые 3 пункта, на кнопку загрузки
-/*function showCommentByFive() {
-
-}*/
 
 export { getFullsizeModal, body};

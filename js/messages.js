@@ -41,10 +41,12 @@ const closeSuccessMessage = () => {
 
   document.removeEventListener('keydown', onSuccessMessageEscKeyDown);
 
-  successButton.removeEventListener('click', () => {
-    closeSuccessMessage ();
-  });
+  successButton.removeEventListener('click', onSuccessButtonClick);
 };
+
+function onSuccessButtonClick () {
+  closeSuccessMessage ();
+}
 
 const openSuccessMessage = () => {
   successUnit.classList.remove('hidden');
@@ -52,9 +54,7 @@ const openSuccessMessage = () => {
   hashtags.value = '';
   textDescription.value = '';
 
-  successButton.addEventListener('click', () => {
-    closeSuccessMessage ();
-  });
+  successButton.addEventListener('click', onSuccessButtonClick);
 
   window.addEventListener('click', (event) => {
     event.stopPropagation();
@@ -67,18 +67,18 @@ const openSuccessMessage = () => {
 const closeErrorMessage = () => {
   errorUnit.classList.add('hidden');
   document.removeEventListener('keydown', onErrorMessageEscKeyDown);
-  errorButton.removeEventListener('click', () => {
-    closeErrorMessage ();
-  });
+  errorButton.removeEventListener('click', onErrorButtonClick);
 };
+
+function onErrorButtonClick () {
+  closeErrorMessage ();
+}
 
 const openErrorMessage = () => {
   errorUnit.classList.remove('hidden');
   document.addEventListener('keydown', onErrorMessageEscKeyDown);
 
-  errorButton.addEventListener('click', () => {
-    closeErrorMessage ();
-  });
+  errorButton.addEventListener('click', onErrorButtonClick);
 
   window.addEventListener('click', (event) => {
     event.stopPropagation();

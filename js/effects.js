@@ -6,7 +6,7 @@ const effectSlider = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.effect-level');
 
 const activateEffects = () => {
-  sliderInit();
+  initSlider();
 
   effectSlider.noUiSlider.on('update', () => {
     effectLevelValue.value = effectSlider.noUiSlider.get();
@@ -17,7 +17,7 @@ const activateEffects = () => {
 
 };
 
-function sliderInit () {
+function initSlider () {
   if (!effectSlider.noUiSlider) {
 
     noUiSlider.create(effectSlider, {
@@ -33,7 +33,7 @@ function sliderInit () {
   }
 }
 
-function sliderDestroy () {
+function destroySlider () {
   if (effectSlider.noUiSlider) {
     effectSlider.noUiSlider.destroy();
   }
@@ -44,7 +44,7 @@ function deactivateEffects () {
   imagePicturePreview.style.filter = 'none';
   imagePicturePreview.className = 'effects__preview--none';
 
-  sliderDestroy();
+  destroySlider();
 }
 
 

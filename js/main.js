@@ -3,11 +3,11 @@ import {activateValidationForm} from './editor-form.js';
 import {getData} from './api.js';
 import {activateFilters} from './filters.js';
 
-const cb = (similarPhotos) => {
+const showPhotosAndActivateFilters = (similarPhotos) => {
   showSmallPictures(similarPhotos);
   activateFilters(similarPhotos);
 };
 
-getData(cb);
+getData(showPhotosAndActivateFilters);
 
 activateValidationForm();
